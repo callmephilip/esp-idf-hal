@@ -1,0 +1,33 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="@brief      Fill structure nvs_stats_t. It provides info about used memory the partition."><meta name="keywords" content="rust, rustlang, rust-lang, nvs_get_stats"><title>nvs_get_stats in esp_idf_sys - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../dark.css" disabled><link rel="stylesheet" type="text/css" href="../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../storage.js"></script><script src="../crates.js"></script><script defer src="../main.js"></script>
+    <noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../favicon.svg"></head><body class="rustdoc fn"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../esp_idf_sys/index.html"><div class="logo-container"><img class="rust-logo" src="../rust-logo.svg" alt="logo"></div>
+        </a><h2 class="location"></h2>
+    </nav>
+    <nav class="sidebar"><a class="sidebar-logo" href="../esp_idf_sys/index.html"><div class="logo-container"><img class="rust-logo" src="../rust-logo.svg" alt="logo"></div>
+        </a><div class="sidebar-elems"><h2 class="location"><a href="index.html">In esp_idf_sys</a></h2><div id="sidebar-vars" data-name="nvs_get_stats" data-ty="fn" data-relpath=""></div><script defer src="sidebar-items.js"></script></div></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../esp_idf_sys/index.html"><img class="rust-logo" src="../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="main-heading">
+    <h1 class="fqn"><span class="in-band">Function <a href="index.html">esp_idf_sys</a>::<wbr><a class="fn" href="#">nvs_get_stats</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../clipboard.svg" width="19" height="18" alt="Copy item path"></button></span></h1><span class="out-of-band"><a class="srclink" href="../src/esp_idf_sys/home/runner/work/esp-idf-hal/esp-idf-hal/target/riscv32imc-esp-espidf/debug/build/esp-idf-sys-e1e8839207a53550/out/bindings.rs.html#63407-63410">source</a> · <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span></div><div class="docblock item-decl"><pre class="rust fn"><code>pub unsafe extern &quot;C&quot; fn nvs_get_stats(<br>&nbsp;&nbsp;&nbsp;&nbsp;part_name: *const <a class="type" href="c_types/type.c_char.html" title="type esp_idf_sys::c_types::c_char">c_char</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;nvs_stats: *mut <a class="struct" href="struct.nvs_stats_t.html" title="struct esp_idf_sys::nvs_stats_t">nvs_stats_t</a><br>) -&gt; <a class="type" href="type.esp_err_t.html" title="type esp_idf_sys::esp_err_t">esp_err_t</a></code></pre></div><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>@brief      Fill structure nvs_stats_t. It provides info about used memory the partition.</p>
+<p>This function calculates to runtime the number of used entries, free entries, total entries,
+and amount namespace in partition.</p>
+<p>\code{c}
+// Example of nvs_get_stats() to get the number of used entries and free entries:
+nvs_stats_t nvs_stats;
+nvs_get_stats(NULL, &amp;nvs_stats);
+printf(“Count: UsedEntries = (%d), FreeEntries = (%d), AllEntries = (%d)\n”,
+nvs_stats.used_entries, nvs_stats.free_entries, nvs_stats.total_entries);
+\endcode</p>
+<p>@param[in]   part_name   Partition name NVS in the partition table.
+If pass a NULL than will use NVS_DEFAULT_PART_NAME (“nvs”).</p>
+<p>@param[out]  nvs_stats   Returns filled structure nvs_states_t.
+It provides info about used memory the partition.</p>
+<p>@return
+- ESP_OK if the changes have been written successfully.
+Return param nvs_stats will be filled.
+- ESP_ERR_NVS_PART_NOT_FOUND if the partition with label “name” is not found.
+Return param nvs_stats will be filled 0.
+- ESP_ERR_NVS_NOT_INITIALIZED if the storage driver is not initialized.
+Return param nvs_stats will be filled 0.
+- ESP_ERR_INVALID_ARG if nvs_stats equal to NULL.
+- ESP_ERR_INVALID_STATE if there is page with the status of INVALID.
+Return param nvs_stats will be filled not with correct values because
+not all pages will be counted. Counting will be interrupted at the first INVALID page.</p>
+</div></details></section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../" data-current-crate="esp_idf_sys" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.62.0-nightly (8f36334ca 2022-04-06)" ></div>
+</body></html>

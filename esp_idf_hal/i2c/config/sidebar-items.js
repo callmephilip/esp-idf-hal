@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["MasterConfig","I2C Master configuration"],["SlaveConfig","I2C Slave configuration"]]});

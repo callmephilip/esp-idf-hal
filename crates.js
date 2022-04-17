@@ -1,0 +1,1 @@
+window.ALL_CRATES = ["cfg_if","embedded_hal","embedded_svc","enumset","esp_idf_hal","esp_idf_sys","log","nb","no_std_net","serde"];

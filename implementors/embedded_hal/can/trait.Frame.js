@@ -1,0 +1,3 @@
+(function() {var implementors = {};
+implementors["esp_idf_hal"] = [{"text":"impl <a class=\"trait\" href=\"embedded_hal/can/trait.Frame.html\" title=\"trait embedded_hal::can::Frame\">Frame</a> for <a class=\"struct\" href=\"esp_idf_hal/can/struct.Frame.html\" title=\"struct esp_idf_hal::can::Frame\">Frame</a>","synthetic":false,"types":["esp_idf_hal::can::Frame"]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

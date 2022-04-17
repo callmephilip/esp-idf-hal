@@ -1,0 +1,1 @@
+initSidebarItems({"mod":[["config","UART configuration"]],"struct":[["Pins","Pins used by the UART interface"],["Rx","Serial receiver"],["Serial","Serial abstraction"],["SerialError",""],["Tx","Serial transmitter"],["UART0",""],["UART1",""]],"trait":[["Uart",""]]});

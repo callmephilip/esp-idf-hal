@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["DataBits","Number of data bits"],["FlowControl","Number of data bits"],["Parity","Parity check"],["StopBits","Number of stop bits"]],"struct":[["Config","UART configuration"]]});

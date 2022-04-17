@@ -1,0 +1,76 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Receive an item from a queue.  The item is received by copy so a buffer of adequate size must be provided.  The number of bytes copied into the buffer was defined when the queue was created."><meta name="keywords" content="rust, rustlang, rust-lang, xQueueReceive"><title>xQueueReceive in esp_idf_sys - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../dark.css" disabled><link rel="stylesheet" type="text/css" href="../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../storage.js"></script><script src="../crates.js"></script><script defer src="../main.js"></script>
+    <noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../favicon.svg"></head><body class="rustdoc fn"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../esp_idf_sys/index.html"><div class="logo-container"><img class="rust-logo" src="../rust-logo.svg" alt="logo"></div>
+        </a><h2 class="location"></h2>
+    </nav>
+    <nav class="sidebar"><a class="sidebar-logo" href="../esp_idf_sys/index.html"><div class="logo-container"><img class="rust-logo" src="../rust-logo.svg" alt="logo"></div>
+        </a><div class="sidebar-elems"><h2 class="location"><a href="index.html">In esp_idf_sys</a></h2><div id="sidebar-vars" data-name="xQueueReceive" data-ty="fn" data-relpath=""></div><script defer src="sidebar-items.js"></script></div></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../esp_idf_sys/index.html"><img class="rust-logo" src="../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="main-heading">
+    <h1 class="fqn"><span class="in-band">Function <a href="index.html">esp_idf_sys</a>::<wbr><a class="fn" href="#">xQueueReceive</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../clipboard.svg" width="19" height="18" alt="Copy item path"></button></span></h1><span class="out-of-band"><a class="srclink" href="../src/esp_idf_sys/home/runner/work/esp-idf-hal/esp-idf-hal/target/riscv32imc-esp-espidf/debug/build/esp-idf-sys-e1e8839207a53550/out/bindings.rs.html#23773-23777">source</a> · <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span></div><div class="docblock item-decl"><pre class="rust fn"><code>pub unsafe extern &quot;C&quot; fn xQueueReceive(<br>&nbsp;&nbsp;&nbsp;&nbsp;xQueue: <a class="type" href="type.QueueHandle_t.html" title="type esp_idf_sys::QueueHandle_t">QueueHandle_t</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;pvBuffer: *mut <a class="type" href="c_types/type.c_void.html" title="type esp_idf_sys::c_types::c_void">c_void</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;xTicksToWait: <a class="type" href="type.TickType_t.html" title="type esp_idf_sys::TickType_t">TickType_t</a><br>) -&gt; <a class="type" href="type.BaseType_t.html" title="type esp_idf_sys::BaseType_t">BaseType_t</a></code></pre></div><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Receive an item from a queue.  The item is received by copy so a buffer of
+adequate size must be provided.  The number of bytes copied into the buffer
+was defined when the queue was created.</p>
+<p>Successfully received items are removed from the queue.</p>
+<p>This function must not be used in an interrupt service routine.  See
+xQueueReceiveFromISR for an alternative that can.</p>
+<p>@param xQueue The handle to the queue from which the item is to be
+received.</p>
+<p>@param pvBuffer Pointer to the buffer into which the received item will
+be copied.</p>
+<p>@param xTicksToWait The maximum amount of time the task should block
+waiting for an item to receive should the queue be empty at the time
+of the call.	 xQueueReceive() will return immediately if xTicksToWait
+is zero and the queue is empty.  The time is defined in tick periods so the
+constant portTICK_PERIOD_MS should be used to convert to real time if this is
+required.</p>
+<p>@return pdTRUE if an item was successfully received from the queue,
+otherwise pdFALSE.</p>
+<p>Example usage:
+@code{c}
+struct AMessage
+{
+char ucMessageID;
+char ucData[ 20 ];
+} xMessage;</p>
+<p>QueueHandle_t xQueue;</p>
+<p>// Task to create a queue and post a value.
+void vATask( void *pvParameters )
+{
+struct AMessage *pxMessage;</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="comment">// Create a queue capable of containing 10 pointers to AMessage structures.</span>
+<span class="comment">// These should be passed by pointer as they contain a lot of data.</span>
+<span class="ident">xQueue</span> <span class="op">=</span> <span class="ident">xQueueCreate</span>( <span class="number">10</span>, <span class="ident">sizeof</span>( <span class="kw">struct</span> <span class="ident">AMessage</span> <span class="op">*</span> ) );
+<span class="kw">if</span>( <span class="ident">xQueue</span> <span class="op">==</span> <span class="number">0</span> )
+{
+	<span class="comment">// Failed to create the queue.</span>
+}
+
+<span class="comment">// ...</span>
+
+<span class="comment">// Send a pointer to a struct AMessage object.  Don&#39;t block if the</span>
+<span class="comment">// queue is already full.</span>
+<span class="ident">pxMessage</span> <span class="op">=</span> <span class="op">&amp;</span> <span class="ident">xMessage</span>;
+<span class="ident">xQueueSend</span>( <span class="ident">xQueue</span>, ( <span class="ident">void</span> <span class="op">*</span> ) <span class="kw-2">&amp;</span><span class="ident">pxMessage</span>, ( <span class="ident">TickType_t</span> ) <span class="number">0</span> );
+
+<span class="comment">// ... Rest of task code.</span></code></pre></div>
+<p>}</p>
+<p>// Task to receive from the queue.
+void vADifferentTask( void *pvParameters )
+{
+struct AMessage *pxRxedMessage;</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">if</span>( <span class="ident">xQueue</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span> )
+{
+	<span class="comment">// Receive a message on the created queue.  Block for 10 ticks if a</span>
+	<span class="comment">// message is not immediately available.</span>
+	<span class="kw">if</span>( <span class="ident">xQueueReceive</span>( <span class="ident">xQueue</span>, <span class="kw-2">&amp;</span>( <span class="ident">pxRxedMessage</span> ), ( <span class="ident">TickType_t</span> ) <span class="number">10</span> ) )
+	{
+		<span class="comment">// pcRxedMessage now points to the struct AMessage variable posted</span>
+		<span class="comment">// by vATask.</span>
+	}
+}
+
+<span class="comment">// ... Rest of task code.</span></code></pre></div>
+<p>}
+@endcode
+\ingroup QueueManagement</p>
+</div></details></section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../" data-current-crate="esp_idf_sys" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.62.0-nightly (8f36334ca 2022-04-06)" ></div>
+</body></html>

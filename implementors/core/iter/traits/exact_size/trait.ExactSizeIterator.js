@@ -1,0 +1,3 @@
+(function() {var implementors = {};
+implementors["enumset"] = [{"text":"impl&lt;T:&nbsp;<a class=\"trait\" href=\"enumset/trait.EnumSetType.html\" title=\"trait enumset::EnumSetType\">EnumSetType</a>&gt; ExactSizeIterator for <a class=\"struct\" href=\"enumset/struct.EnumSetIter.html\" title=\"struct enumset::EnumSetIter\">EnumSetIter</a>&lt;T&gt;","synthetic":false,"types":["enumset::EnumSetIter"]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

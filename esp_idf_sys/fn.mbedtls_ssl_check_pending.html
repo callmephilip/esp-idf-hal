@@ -1,0 +1,38 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="\brief          Check if there is data already read from the underlying transport but not yet processed."><meta name="keywords" content="rust, rustlang, rust-lang, mbedtls_ssl_check_pending"><title>mbedtls_ssl_check_pending in esp_idf_sys - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../dark.css" disabled><link rel="stylesheet" type="text/css" href="../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../storage.js"></script><script src="../crates.js"></script><script defer src="../main.js"></script>
+    <noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../favicon.svg"></head><body class="rustdoc fn"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../esp_idf_sys/index.html"><div class="logo-container"><img class="rust-logo" src="../rust-logo.svg" alt="logo"></div>
+        </a><h2 class="location"></h2>
+    </nav>
+    <nav class="sidebar"><a class="sidebar-logo" href="../esp_idf_sys/index.html"><div class="logo-container"><img class="rust-logo" src="../rust-logo.svg" alt="logo"></div>
+        </a><div class="sidebar-elems"><h2 class="location"><a href="index.html">In esp_idf_sys</a></h2><div id="sidebar-vars" data-name="mbedtls_ssl_check_pending" data-ty="fn" data-relpath=""></div><script defer src="sidebar-items.js"></script></div></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../esp_idf_sys/index.html"><img class="rust-logo" src="../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="main-heading">
+    <h1 class="fqn"><span class="in-band">Function <a href="index.html">esp_idf_sys</a>::<wbr><a class="fn" href="#">mbedtls_ssl_check_pending</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../clipboard.svg" width="19" height="18" alt="Copy item path"></button></span></h1><span class="out-of-band"><a class="srclink" href="../src/esp_idf_sys/home/runner/work/esp-idf-hal/esp-idf-hal/target/riscv32imc-esp-espidf/debug/build/esp-idf-sys-e1e8839207a53550/out/bindings.rs.html#56130">source</a> · <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span></div><div class="docblock item-decl"><pre class="rust fn"><code>pub unsafe extern &quot;C&quot; fn mbedtls_ssl_check_pending(<br>&nbsp;&nbsp;&nbsp;&nbsp;ssl: *const <a class="struct" href="struct.mbedtls_ssl_context.html" title="struct esp_idf_sys::mbedtls_ssl_context">mbedtls_ssl_context</a><br>) -&gt; <a class="type" href="c_types/type.c_int.html" title="type esp_idf_sys::c_types::c_int">c_int</a></code></pre></div><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>\brief          Check if there is data already read from the
+underlying transport but not yet processed.</p>
+<p>\param ssl      SSL context</p>
+<p>\return         0 if nothing’s pending, 1 otherwise.</p>
+<p>\note           This is different in purpose and behaviour from
+\c mbedtls_ssl_get_bytes_avail in that it considers
+any kind of unprocessed data, not only unread
+application data. If \c mbedtls_ssl_get_bytes
+returns a non-zero value, this function will
+also signal pending data, but the converse does
+not hold. For example, in DTLS there might be
+further records waiting to be processed from
+the current underlying transport’s datagram.</p>
+<p>\note           If this function returns 1 (data pending), this
+does not imply that a subsequent call to
+\c mbedtls_ssl_read will provide any data;
+e.g., the unprocessed data might turn out
+to be an alert or a handshake message.</p>
+<p>\note           This function is useful in the following situation:
+If the SSL/TLS module successfully returns from an
+operation - e.g. a handshake or an application record
+read - and you’re awaiting incoming data next, you
+must not immediately idle on the underlying transport
+to have data ready, but you need to check the value
+of this function first. The reason is that the desired
+data might already be read but not yet processed.
+If, in contrast, a previous call to the SSL/TLS module
+returned MBEDTLS_ERR_SSL_WANT_READ, it is not necessary
+to call this function, as the latter error code entails
+that all internal data has been processed.</p>
+</div></details></section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../" data-current-crate="esp_idf_sys" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.62.0-nightly (8f36334ca 2022-04-06)" ></div>
+</body></html>

@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Config","SPI configuration"],["V02Type",""]]});

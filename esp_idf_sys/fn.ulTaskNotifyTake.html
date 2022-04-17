@@ -1,0 +1,57 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Simplified macro for receiving task notification."><meta name="keywords" content="rust, rustlang, rust-lang, ulTaskNotifyTake"><title>ulTaskNotifyTake in esp_idf_sys - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../dark.css" disabled><link rel="stylesheet" type="text/css" href="../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../storage.js"></script><script src="../crates.js"></script><script defer src="../main.js"></script>
+    <noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../favicon.svg"></head><body class="rustdoc fn"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../esp_idf_sys/index.html"><div class="logo-container"><img class="rust-logo" src="../rust-logo.svg" alt="logo"></div>
+        </a><h2 class="location"></h2>
+    </nav>
+    <nav class="sidebar"><a class="sidebar-logo" href="../esp_idf_sys/index.html"><div class="logo-container"><img class="rust-logo" src="../rust-logo.svg" alt="logo"></div>
+        </a><div class="sidebar-elems"><h2 class="location"><a href="index.html">In esp_idf_sys</a></h2><div id="sidebar-vars" data-name="ulTaskNotifyTake" data-ty="fn" data-relpath=""></div><script defer src="sidebar-items.js"></script></div></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../esp_idf_sys/index.html"><img class="rust-logo" src="../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="main-heading">
+    <h1 class="fqn"><span class="in-band">Function <a href="index.html">esp_idf_sys</a>::<wbr><a class="fn" href="#">ulTaskNotifyTake</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../clipboard.svg" width="19" height="18" alt="Copy item path"></button></span></h1><span class="out-of-band"><a class="srclink" href="../src/esp_idf_sys/home/runner/work/esp-idf-hal/esp-idf-hal/target/riscv32imc-esp-espidf/debug/build/esp-idf-sys-e1e8839207a53550/out/bindings.rs.html#17803">source</a> · <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span></div><div class="docblock item-decl"><pre class="rust fn"><code>pub unsafe extern &quot;C&quot; fn ulTaskNotifyTake(<br>&nbsp;&nbsp;&nbsp;&nbsp;xClearCountOnExit: <a class="type" href="type.BaseType_t.html" title="type esp_idf_sys::BaseType_t">BaseType_t</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;xTicksToWait: <a class="type" href="type.TickType_t.html" title="type esp_idf_sys::TickType_t">TickType_t</a><br>) -&gt; u32</code></pre></div><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Simplified macro for receiving task notification.</p>
+<p>configUSE_TASK_NOTIFICATIONS must be undefined or defined as 1 for this
+function to be available.</p>
+<p>When configUSE_TASK_NOTIFICATIONS is set to one each task has its own private
+“notification value”, which is a 32-bit unsigned integer (uint32_t).</p>
+<p>Events can be sent to a task using an intermediary object.  Examples of such
+objects are queues, semaphores, mutexes and event groups.  Task notifications
+are a method of sending an event directly to a task without the need for such
+an intermediary object.</p>
+<p>A notification sent to a task can optionally perform an action, such as
+update, overwrite or increment the task’s notification value.  In that way
+task notifications can be used to send data to a task, or be used as light
+weight and fast binary or counting semaphores.</p>
+<p>ulTaskNotifyTake() is intended for use when a task notification is used as a
+faster and lighter weight binary or counting semaphore alternative.  Actual
+FreeRTOS semaphores are taken using the xSemaphoreTake() API function, the
+equivalent action that instead uses a task notification is
+ulTaskNotifyTake().</p>
+<p>When a task is using its notification value as a binary or counting semaphore
+other tasks should send notifications to it using the xTaskNotifyGive()
+macro, or xTaskNotify() function with the eAction parameter set to
+eIncrement.</p>
+<p>ulTaskNotifyTake() can either clear the task’s notification value to
+zero on exit, in which case the notification value acts like a binary
+semaphore, or decrement the task’s notification value on exit, in which case
+the notification value acts like a counting semaphore.</p>
+<p>A task can use ulTaskNotifyTake() to [optionally] block to wait for a
+the task’s notification value to be non-zero.  The task does not consume any
+CPU time while it is in the Blocked state.</p>
+<p>Where as xTaskNotifyWait() will return when a notification is pending,
+ulTaskNotifyTake() will return when the task’s notification value is
+not zero.</p>
+<p>See http://www.FreeRTOS.org/RTOS-task-notifications.html for details.</p>
+<p>@param xClearCountOnExit if xClearCountOnExit is pdFALSE then the task’s
+notification value is decremented when the function exits.  In this way the
+notification value acts like a counting semaphore.  If xClearCountOnExit is
+not pdFALSE then the task’s notification value is cleared to zero when the
+function exits.  In this way the notification value acts like a binary
+semaphore.</p>
+<p>@param xTicksToWait The maximum amount of time that the task should wait in
+the Blocked state for the task’s notification value to be greater than zero,
+should the count not already be greater than zero when
+ulTaskNotifyTake() was called.  The task will not consume any processing
+time while it is in the Blocked state.  This is specified in kernel ticks,
+the macro pdMS_TO_TICKS( value_in_ms ) can be used to convert a time
+specified in milliseconds to a time specified in ticks.</p>
+<p>@return The task’s notification count before it is either cleared to zero or
+decremented (see the xClearCountOnExit parameter).</p>
+<p>\ingroup TaskNotifications</p>
+</div></details></section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../" data-current-crate="esp_idf_sys" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.62.0-nightly (8f36334ca 2022-04-06)" ></div>
+</body></html>

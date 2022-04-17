@@ -1,0 +1,32 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="@brief       Create an iterator to enumerate NVS entries based on one or more parameters"><meta name="keywords" content="rust, rustlang, rust-lang, nvs_entry_find"><title>nvs_entry_find in esp_idf_sys - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceSerif4-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../FiraSans-Regular.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../FiraSans-Medium.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceCodePro-Regular.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceSerif4-Bold.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../SourceCodePro-Semibold.ttf.woff2"><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../ayu.css" disabled><link rel="stylesheet" type="text/css" href="../dark.css" disabled><link rel="stylesheet" type="text/css" href="../light.css" id="themeStyle"><script id="default-settings" ></script><script src="../storage.js"></script><script src="../crates.js"></script><script defer src="../main.js"></script>
+    <noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../favicon.svg"></head><body class="rustdoc fn"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="sidebar-logo" href="../esp_idf_sys/index.html"><div class="logo-container"><img class="rust-logo" src="../rust-logo.svg" alt="logo"></div>
+        </a><h2 class="location"></h2>
+    </nav>
+    <nav class="sidebar"><a class="sidebar-logo" href="../esp_idf_sys/index.html"><div class="logo-container"><img class="rust-logo" src="../rust-logo.svg" alt="logo"></div>
+        </a><div class="sidebar-elems"><h2 class="location"><a href="index.html">In esp_idf_sys</a></h2><div id="sidebar-vars" data-name="nvs_entry_find" data-ty="fn" data-relpath=""></div><script defer src="sidebar-items.js"></script></div></nav><main><div class="width-limiter"><div class="sub-container"><a class="sub-logo-container" href="../esp_idf_sys/index.html"><img class="rust-logo" src="../rust-logo.svg" alt="logo"></a><nav class="sub"><div class="theme-picker hidden"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="22" height="22" alt="Pick another theme!" src="../brush.svg"></button><div id="theme-choices" role="menu"></div></div><form class="search-form"><div class="search-container"><span></span><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../wheel.svg"></a></div></form></nav></div><section id="main-content" class="content"><div class="main-heading">
+    <h1 class="fqn"><span class="in-band">Function <a href="index.html">esp_idf_sys</a>::<wbr><a class="fn" href="#">nvs_entry_find</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../clipboard.svg" width="19" height="18" alt="Copy item path"></button></span></h1><span class="out-of-band"><a class="srclink" href="../src/esp_idf_sys/home/runner/work/esp-idf-hal/esp-idf-hal/target/riscv32imc-esp-espidf/debug/build/esp-idf-sys-e1e8839207a53550/out/bindings.rs.html#63481-63485">source</a> · <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span></div><div class="docblock item-decl"><pre class="rust fn"><code>pub unsafe extern &quot;C&quot; fn nvs_entry_find(<br>&nbsp;&nbsp;&nbsp;&nbsp;part_name: *const <a class="type" href="c_types/type.c_char.html" title="type esp_idf_sys::c_types::c_char">c_char</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;namespace_name: *const <a class="type" href="c_types/type.c_char.html" title="type esp_idf_sys::c_types::c_char">c_char</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;type_: <a class="type" href="type.nvs_type_t.html" title="type esp_idf_sys::nvs_type_t">nvs_type_t</a><br>) -&gt; <a class="type" href="type.nvs_iterator_t.html" title="type esp_idf_sys::nvs_iterator_t">nvs_iterator_t</a></code></pre></div><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>@brief       Create an iterator to enumerate NVS entries based on one or more parameters</p>
+<p>\code{c}
+// Example of listing all the key-value pairs of any type under specified partition and namespace
+nvs_iterator_t it = nvs_entry_find(partition, namespace, NVS_TYPE_ANY);
+while (it != NULL) {
+nvs_entry_info_t info;
+nvs_entry_info(it, &amp;info);
+it = nvs_entry_next(it);
+printf(“key ‘%s’, type ‘%d’ \n”, info.key, info.type);
+};
+// Note: no need to release iterator obtained from nvs_entry_find function when
+//       nvs_entry_find or nvs_entry_next function return NULL, indicating no other
+//       element for specified criteria was found.
+}
+\endcode</p>
+<p>@param[in]   part_name       Partition name</p>
+<p>@param[in]   namespace_name  Set this value if looking for entries with
+a specific namespace. Pass NULL otherwise.</p>
+<p>@param[in]   type            One of nvs_type_t values.</p>
+<p>@return
+Iterator used to enumerate all the entries found,
+or NULL if no entry satisfying criteria was found.
+Iterator obtained through this function has to be released
+using nvs_release_iterator when not used any more.</p>
+</div></details></section><section id="search" class="content hidden"></section></div></main><div id="rustdoc-vars" data-root-path="../" data-current-crate="esp_idf_sys" data-themes="ayu,dark,light" data-resource-suffix="" data-rustdoc-version="1.62.0-nightly (8f36334ca 2022-04-06)" ></div>
+</body></html>
